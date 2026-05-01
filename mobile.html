@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris on Even - Phone Control</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #00ff00; font-family: monospace; height: 100vh; display: flex; flex-direction: column; }
+    .header { text-align: center; padding: 20px; border-bottom: 2px solid #00ff00; }
+    .game-info { text-align: center; padding: 10px; font-size: 14px; }
+    .controls { flex: 1; display: flex; flex-direction: column; padding: 20px; gap: 20px; }
+    .row { display: flex; justify-content: center; gap: 20px; }
+    .btn { 
+      background: #003300; border: 2px solid #00ff00; color: #00ff00; 
+      font-size: 24px; padding: 20px; border-radius: 10px; 
+      flex: 1; max-width: 200px; text-align: center; cursor: pointer;
+      user-select: none; -webkit-user-select: none;
+    }
+    .btn:active { background: #00ff00; color: #000; }
+    .btn-wide { max-width: 420px; margin: 0 auto; }
+    .hint { text-align: center; padding: 10px; font-size: 12px; color: #008800; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>TETRIS</h1>
+    <div>Phone Control Panel</div>
+  </div>
+  
+  <div class="game-info">
+    <div>Score: <span id="score">0</span></div>
+    <div>Speed: <span id="speed">100%</span></div>
+  </div>
+
+  <div class="controls">
+    <div class="row">
+      <div class="btn" ontouchstart="sendEvent('swipe_up')" onmousedown="sendEvent('swipe_up')">⬆<br><small>Left</small></div>
+      <div class="btn" ontouchstart="sendEvent('rotate')" onmousedown="sendEvent('rotate')">↻<br><small>Rotate</small></div>
+      <div class="btn" ontouchstart="sendEvent('swipe_down')" onmousedown="sendEvent('swipe_down')">⬇<br><small>Right</small></div>
+    </div>
+    <div class="row">
+      <div class="btn btn-wide" ontouchstart="sendEvent('double_click')" onmousedown="sendEvent('double_click')">⏸<br><small>Pause/Restart</small></div>
+    </div>
+  </div>
+
+  <div class="hint">
+    Open this page on your phone, keep it open while playing on glasses
+  </div>
+
+  <script>
+    // This is a simple phone control interface
+    // In production, this would communicate with the game via Even Hub SDK
+    // For now, it's a placeholder showing the control layout
+    
+    function sendEvent(action) {
+      console.log('Phone control:', action)
+      // In real implementation, this would send event to the game via:
+      // 1. Even Hub SDK's event system (if phone and glasses are connected)
+      // 2. Or via localStorage/shared state (same device)
+      // 3. Or via WebSocket to a local server
+      
+      // For demo, we just log and show feedback
+      event.target.style.background = '#00ff00'
+      event.target.style.color = '#000'
+      setTimeout(() => {
+        event.target.style.background = '#003300'
+        event.target.style.color = '#00ff00'
+      }, 200)
+    }
+
+    // Update game info from localStorage (if available)
+    function updateInfo() {
+      const score = localStorage.getItem('tetris_score') || '0'
+      const speed = localStorage.getItem('tetris_speed') || '100%'
+      document.getElementById('score').textContent = score
+      document.getElementById('speed').textContent = speed
+    }
+
+    // Poll for updates (if game updates localStorage)
+    setInterval(updateInfo, 1000)
+    updateInfo()
+  </script>
+</body>
+</html>

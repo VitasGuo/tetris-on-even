@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Cover Image</title>
+</head>
+<body style="background:#000; margin:0; display:flex; justify-content:center; align-items:center;">
+  <canvas id="cover" width="512" height="512" style="border:1px solid #333;"></canvas>
+  <script>
+    const canvas = document.getElementById('cover')
+    const ctx = canvas.getContext('2d')
+
+    // 背景
+    ctx.fillStyle = '#000000'
+    ctx.fillRect(0, 0, 512, 512)
+
+    // 绘制方块图案（装饰）
+    ctx.fillStyle = '#00ff00'
+    const blockSize = 20
+    const blocks = [
+      [2, 5], [3, 5], [4, 5], [5, 5],  // I
+      [2, 8], [3, 8], [2, 9], [3, 9],  // O
+      [4, 12], [5, 12], [3, 13], [4, 13], [5, 13]  // T
+    ]
+
+    blocks.forEach(([x, y]) => {
+      // 外框
+      ctx.fillRect(x*blockSize, y*blockSize, blockSize, blockSize)
+      // 清除中间
+      ctx.clearRect(x*blockSize+2, y*blockSize+2, blockSize-4, blockSize-4)
+      // 内方块
+      ctx.fillRect(x*blockSize+4, y*blockSize+4, blockSize-8, blockSize-8)
+    })
+
+    // 文字 "TETRIS"
+    ctx.font = 'bold 48px monospace'
+    ctx.fillStyle = '#00ff00'
+    ctx.textAlign = 'center'
+    ctx.fillText('TETRIS', 256, 300)
+
+    // "on Even"
+    ctx.font = '24px monospace'
+    ctx.fillText('on Even', 256, 340)
+
+    // 戒指图标
+    ctx.beginPath()
+    ctx.arc(256, 400, 30, 0, Math.PI * 2)
+    ctx.strokeStyle = '#00ff00'
+    ctx.lineWidth = 3
+    ctx.stroke()
+
+    ctx.font = '16px monospace'
+    ctx.fillText('Ring Control', 256, 430)
+
+    // 点击保存
+    canvas.addEventListener('click', () => {
+      const link = document.createElement('a')
+      link.download = 'cover.png'
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    })
+    ctx.font = '14px monospace'
+    ctx.fillStyle = '#888'
+    ctx.fillText('Click canvas to save', 256, 480)
+  </script>
+</body>
+</html>

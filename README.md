@@ -1,6 +1,8 @@
-# Ring Tetris - EVEN 眼镜俄罗斯方块
+# Tetris on Even - EVEN 眼镜俄罗斯方块
 
-专为 EVEN G2 智能眼镜和 EVEN 戒指设计的经典俄罗斯方块游戏。
+专为 EVEN G2 智能眼镜、EVEN 戒指和手机设计的经典俄罗斯方块游戏。
+
+**当前版本：v1.1.0** | **新增：手机操控界面支持**
 
 ## 功能特点
 
@@ -14,7 +16,7 @@
 ## 安装
 
 ```bash
-cd ring-tetris
+cd tetris-on-even
 npm install
 ```
 
@@ -70,7 +72,7 @@ npx evenhub qr --url http://<your-ip>:5173
 ## 项目结构
 
 ```
-ring-tetris/
+tetris-on-even/
 ├── src/
 │   └── main.ts          # 游戏主逻辑
 ├── app.json            # EVEN Hub 应用配置
@@ -82,6 +84,45 @@ ring-tetris/
 ## 许可
 
 MIT License
+
+---
+
+## GitHub 上传指南
+
+### 方法1：通过 GitHub 网页创建仓库（推荐）
+
+1. **登录 GitHub**：https://github.com
+
+2. **创建新仓库**：
+   - 点击右上角 "+" → "New repository"
+   - 仓库名：`tetris-on-even`
+   - 描述：`EVEN G2 Tetris on Even - Classic Tetris game for smart glasses`
+   - 选择 **Public** 或 **Private**
+   - **不要**勾选 "Initialize with README"（我们已经有了）
+   - 点击 "Create repository"
+
+3. **推送代码**（复制 GitHub 给你的命令）：
+```bash
+cd tetris-on-even
+git branch -M main
+git remote add origin https://github.com/你的用户名/tetris-on-even.git
+git push -u origin main
+```
+
+### 方法2：使用 GitHub CLI（如果已安装）
+
+```bash
+# 安装 gh CLI（如果没有）
+# winget install GitHub.cli
+
+# 登录
+gh auth login
+
+# 创建仓库并推送
+cd tetris-on-even
+git branch -M main
+gh repo create tetris-on-even --public --source=. --push
+```
 
 ---
 

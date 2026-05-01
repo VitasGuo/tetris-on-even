@@ -364,12 +364,12 @@ const hsd = new TextContainerProperty({
   containerID: 7, containerName: 'hs', content: '0', isEventCapture: 0,
 })
 
-// Right panel
+// Right panel - with mobile hint
 const info = new TextContainerProperty({
   xPosition: RX, yPosition: IY,
   width: 170, height: 200, borderWidth: 0, borderColor: 0, paddingLength: 2,
   containerID: 5, containerName: 'info',
-  content: `Speed:100%\n\n^ Slide: Left\nv Slide: Right\nClick: Rotate\nD-Click: Pause`,
+  content: `Speed:100%\n\n^ Slide: Left\nv Slide: Right\nClick: Rotate\nD-Click: Pause\n\nPhone: OK`,
   isEventCapture: 0,
 })
 
@@ -391,13 +391,20 @@ if (res === 0) {
   await BRIDGE.updateImageRawData(new ImageRawDataUpdate({ containerID: 3, containerName: 'gb', imageData: eb.toDataURL('image/png').split(',')[1] }))
 
   BRIDGE.onEvenHubEvent(async (event) => {
+    // Log all events for debugging (including phone input)
     if (event.sysEvent) {
       const t = event.sysEvent.eventType ?? 0
+      const src = event.sysEvent.eventSource
+      console.log(`Event: sysEvent type=${t}, source=${src}`)
+      
       if (t === 3) { if (g.over) start(); else toggleP(); return }
       if (t === 0) { if (g.over) return; if (g.paused) toggleP(); else doR(); return }
     }
     if (event.textEvent) {
       const t = event.textEvent.eventType ?? 0
+      const src = event.textEvent.eventSource
+      console.log(`Event: textEvent type=${t}, source=${src}`)
+      
       if (t === 1) moveL()
       else if (t === 2) moveR()
     }
