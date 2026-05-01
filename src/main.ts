@@ -394,16 +394,14 @@ if (res === 0) {
     // Log all events for debugging (including phone input)
     if (event.sysEvent) {
       const t = event.sysEvent.eventType ?? 0
-      const src = event.sysEvent.eventSource
-      console.log(`Event: sysEvent type=${t}, source=${src}`)
+      console.log(`Event: sysEvent type=${t}`)
       
       if (t === 3) { if (g.over) start(); else toggleP(); return }
       if (t === 0) { if (g.over) return; if (g.paused) toggleP(); else doR(); return }
     }
     if (event.textEvent) {
       const t = event.textEvent.eventType ?? 0
-      const src = event.textEvent.eventSource
-      console.log(`Event: textEvent type=${t}, source=${src}`)
+      console.log(`Event: textEvent type=${t}`)
       
       if (t === 1) moveL()
       else if (t === 2) moveR()
